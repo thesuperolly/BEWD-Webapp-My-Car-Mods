@@ -54,14 +54,13 @@ if (isset($_POST['submit'])) {
 <form method="post">
     <div class="form-group">
         <label class="form-label" for="projectname">Project</label>
-        <input class="form-input" type="text" id="projectname" name="projectname" placeholder="New tyres?">
+        <input class="form-input" type="text" id="projectname" name="projectname" placeholder="New tyres?" required>
     </div>
 
     <!-- Project description -->
     <div class="form-group">
         <label class="form-label" for="projectdescription">Description</label>
-        <textarea class="form-input" type="text" id="projectdescription" name="projectdescription" placeholder="what are the details?">
-</textarea>
+        <textarea class="form-input" type="text" id="projectdescription" name="projectdescription" placeholder="what are the details?" required></textarea>
     </div>
 
     <!-- Project Type -->

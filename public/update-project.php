@@ -90,21 +90,22 @@
 
 <h2>Edit a project</h2>
 
-<a href='process.php?delete=<?php echo $project['id']; ?>'>Delete</a>
+<a href='delete.php?delete=<?php echo $project['id']; ?>'>Delete</a>
 
 <form method="POST">
 
     <input type="hidden" name="id" value="<?php echo $id; ?>">
 
+    <!-- Project Name -->
     <div class="form-group">
         <label class="form-label" for="projectname"><h5>Project</h5></label>
-        <input class="form-input" type="text" id="projectname" name="projectname" placeholder="New tyres?" value="<?php echo escape($project['projectname']); ?>">
+        <input class="form-input" type="text" id="projectname" name="projectname" placeholder="New tyres?" value="<?php echo escape($project['projectname']); ?>" required>
     </div>
 
     <!-- Project description -->
     <div class="form-group">
         <label class="form-label" for="projectdescription"><h5>Description</h5></label>
-        <textarea class="form-input" type="text" id="projectdescription" name="projectdescription" placeholder="what are the details?"><?php echo escape($project['projectdescription']); ?></textarea>
+        <textarea class="form-input" type="text" id="projectdescription" name="projectdescription" placeholder="what are the details?" required><?php echo escape($project['projectdescription']); ?></textarea>
     </div>
 
     <!-- Project Type -->

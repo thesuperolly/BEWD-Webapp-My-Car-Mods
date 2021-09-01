@@ -4,10 +4,11 @@
   <a href="create.php" class="link">Create Project</a>
   </section>
   <section class="navbar-section">
-    <div class="input-group input-inline">
-      <input class="form-input" type="email" placeholder="Email">
-      <input class="form-input" type="password" placeholder="Password">
-      <button class="btn btn-primary input-group-btn">Sign In</button>
-    </div>
+
+            <p>Logged in as:<?php echo htmlspecialchars($_SESSION["username"]); ?>.</p>
+  
+            <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+            <p>Have an account? <a href="login.php">Sign In</a>.</p>
+
   </section>
 </header>

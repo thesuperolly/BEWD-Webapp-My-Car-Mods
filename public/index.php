@@ -1,3 +1,6 @@
+
+
+<!-- accessing Project data -->
 <?php
 
 // this code will only execute after the submit button is clicked
