@@ -1,8 +1,7 @@
 <header class="navbar">
   <section class="navbar-section">
-    <a href="..." class="navbar-brand mr-2">My Car Mods</a>
-    <a href="..." class="btn btn-link"></a>
-    <a href="..." class="btn btn-link">GitHub</a>
+  <a href="/public" class="navbar-brand mr-2"><h3>My Car Mods</h3></a>
+  <a href="create.php" class="link">Create Project</a>
   </section>
   <section class="navbar-section">
     <div class="input-group input-inline">
