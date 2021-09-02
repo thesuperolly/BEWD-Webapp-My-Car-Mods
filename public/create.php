@@ -1,4 +1,7 @@
 <?php
+// Initialize the session
+session_start();
+
 // this code will only execute after the submit button is clicked
 if (isset($_POST['submit'])) {
     // include the config file that we created before
@@ -8,13 +11,49 @@ if (isset($_POST['submit'])) {
         // FIRST: Connect to the database
         $connection = new PDO($dsn, $username, $password, $options);
 
+        if ($_FILES['projectimage']['size']!==0){
+            // File (image) Processing
+            $imgFile = $_FILES['projectimage']['name'];
+            $tmp_dir = $_FILES['projectimage']['tmp_name'];
+            $imgSize = $_FILES['projectimage']['size'];
+
+
+            $upload_dir = 'uploads/'; //This is the uploads file path.
+    
+            $imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
+            
+            // valid image extensions
+            $valid_extensions = array('jpeg', 'jpg', 'png', 'gif'); // valid extensions
+            
+            // rename uploading image
+            $uploadedImg = uniqid().".".$imgExt;
+                
+            // allow valid image file formats
+            if(in_array($imgExt, $valid_extensions)){   
+                // Check file size '5MB'
+                if($imgSize < 5000000)    {
+                move_uploaded_file($tmp_dir,$upload_dir.$uploadedImg);
+                }
+                else{
+                $errMSG = "Sorry, your file is too large.";
+                }
+            }
+            else{
+                $errMSG = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";  
+            }
+        } else {
+            $uploadedImg = "default.jpg";
+        }
+        
+
         // SECOND: Get the contents of the form and store it in an array
         $new_project = array(
         "projectname"        => $_POST['projectname'],
         "projectdescription" => $_POST['projectdescription'],
         "projectstatus"      => $_POST['projectstatus'],
         "projecttype"        => $_POST['projecttype'],
-        "projectimage"       => $_POST['projectimage'],
+        "projectimage"       => $uploadedImg,
+        "userid"             => $_SESSION['id']
         );
 
         // THIRD: Turn the array into a SQL statement
@@ -23,18 +62,23 @@ if (isset($_POST['submit'])) {
             projectdescription, 
             projectstatus,
             projecttype,
-            imagelocation
+            imagelocation,
+            userid
             ) VALUES (
                 :projectname, 
                 :projectdescription, 
                 :projectstatus,
                 :projecttype,
-                :projectimage
+                :projectimage,
+                :userid
             )";
        
         // FOURTH: Now write the SQL to the database
         $statement = $connection->prepare($sql);
         $statement->execute($new_project);
+
+        // Refresh and redirect to Index.php
+        header("Refresh:3; url=index.php");
 
     } catch(PDOException $error) {
 
@@ -51,7 +95,7 @@ if (isset($_POST['submit'])) {
 
 <!-- Create project form -->
 <!-- Project title -->
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label class="form-label" for="projectname">Project</label>
         <input class="form-input" type="text" id="projectname" name="projectname" placeholder="New tyres?" required>
@@ -113,3 +157,9 @@ if (isset($_POST['submit'])) {
 
 <!-- Calling footer template -->
 <?php include "templates/footer.php"; ?>    
+
+
+
+
+
+user_image = projectimage.
