@@ -1,5 +1,5 @@
 <?php
 if (isset($_SESSION['id'])){
-    echo '<a href="reser-password.php">Change Password</a>';
+    echo '<a href="reset-password.php">Change Password</a>';
 }
 ?>

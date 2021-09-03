@@ -156,10 +156,4 @@ if (isset($_POST['submit'])) {
 
 
 <!-- Calling footer template -->
-<?php include "templates/footer.php"; ?>    
-
-
-
-
-
-user_image = projectimage.
+<?php include "templates/footer.php"; ?>

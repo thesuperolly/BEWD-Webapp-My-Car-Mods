@@ -2,10 +2,10 @@
 <?php 
 
     // initialize the session.
-    // include "codeSnippets/start_session.php";
+    include "codeSnippets/start_session.php";
 
     // checks is user is loggin in and redirects to login page if not.
-    // include "codeSnippets/loginCheck.php";
+    include "codeSnippets/loginCheck.php";
     
 
     // include the config file that we created last week

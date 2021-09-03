@@ -1,5 +1,4 @@
 <?php 
-
     // initialize the session.
     include "codeSnippets/start_session.php";
 
@@ -10,80 +9,9 @@
     require "../config.php";
     require "common.php";
 
-
-
-    // run when submit button is clicked
-    if (isset($_POST['submit'])) {
-        try {
-            $connection = new PDO($dsn, $username, $password, $options);  
-            
-            //grab elements from form and set as varaible
-            $project =[
-              "id"                 => $_POST['id'],
-              "projectname"        => $_POST['projectname'],
-              "projectdescription" => $_POST['projectdescription'],
-              "projectstatus"      => $_POST['projectstatus'],
-              "projecttype"        => $_POST['projecttype'],
-              "projectimage"       => $_POST['projectimage']
-            ];
-            
-            // create SQL statement
-            $sql = "UPDATE `projects` 
-                    SET id             = :id,
-                    projectname        = :projectname, 
-                    projectdescription = :projectdescription, 
-                    projectstatus      = :projectstatus, 
-                    projecttype        = :projecttype, 
-                    imagelocation      = :projectimage 
-                    WHERE id = :id";
-
-            //prepare sql statement
-            $statement = $connection->prepare($sql);
-            
-            //execute sql statement
-            $statement->execute($project);
-
-
-        } catch(PDOException $error) {
-            echo $sql . "<br>" . $error->getMessage();
-        }
-        header("Location:welcome.php");
-    }
-
-    // GET data from DB
-    //simple if/else statement to check if the id is available
-    if (isset($_GET['id'])) {
-        //yes the id exists 
-        try {
-            // standard db connection
-            $connection = new PDO($dsn, $username, $password, $options);
-            
-            // set if as variable
-            $id = $_GET['id'];
-            
-            //select statement to get the right data
-            $sql = "SELECT * FROM projects WHERE id = :id";
-            
-            // prepare the connection
-            $statement = $connection->prepare($sql);
-            
-            //bind the id to the PDO id
-            $statement->bindValue(':id', $id);
-            
-            // now execute the statement
-            $statement->execute();
-            
-            // attach the sql statement to the new project variable so we can access it in the form
-            $project = $statement->fetch(PDO::FETCH_ASSOC);
-            
-        } catch(PDOExcpetion $error) {
-            echo $sql . "<br>" . $error->getMessage();
-        }
-    } else {
-        // no id, show error
-        echo "No id - something went wrong";
-        //exit;
-    };
+    // all code for updating an existing project.
+    include "codeSnippets/update_code.php";
+   
 ?>
 
 <?php include "templates/header.php"; ?>
@@ -94,9 +22,11 @@
 
 <h2>Edit a project</h2>
 
-<a href='delete.php?delete=<?php echo $project['id']; ?>'>Delete</a>
 
-<form method="POST">
+
+<a href='delete.php?delete=<?php echo $project['id']; ?>'>Delete Project</a>
+
+<form method="post" enctype="multipart/form-data">
 
     <input type="hidden" name="id" value="<?php echo $id; ?>">
 
@@ -116,7 +46,7 @@
     <div class="form-group">
         <label class="form-label">Project Type</label>
         <label class="form-radio">
-            <input type="radio" id="maintenance" name="projecttype" value="Maintenance" <?php if($project['projecttype']=="Maintenanace"){ echo "checked";}?>>
+            <input type="radio" id="maintenance" name="projecttype" value="Maintenance" <?php if($project['projecttype']=="Maintenance"){ echo "checked";}?>>
             <i class="form-icon"></i> Maintenance
         </label>
         <label class="form-radio">
@@ -142,11 +72,18 @@
             <i class="form-icon"></i> Completed
         </label>
     </div>
+    
 
     <!-- Project Image -->
+    <input type="hidden" name="currentImg" value="<?php echo escape($project['imagelocation']); ?>">
+    <div class="card-image">
+    <label class="form-label" for="projectimage">Current Image</label>
+        <img src="uploads/<?php echo $project['imagelocation']; ?>" class="img-responsive">
+    </div>
+
     <div class="form-group">
         <label class="form-label" for="projectimage">Image</label>
-        <input class="form-input" type="file" id="projectimage" name="projectimage" value="<?php echo escape($project['imagelocation']); ?>">
+        <input class="form-input" type="file" id="projectimage" name="projectimage" value="">
     </div>
 
     <!-- Form Submit -->
@@ -154,3 +91,6 @@
 </form>
 
     <?php include "templates/footer.php";?>
+
+    <!-- ++++++++++++++++++++++++++++++ -->
+
