@@ -27,7 +27,7 @@
 
                   <div class="card-footer">
                       <p>Updated: <span><?php echo $row['date']; ?></span></p>
-                      <button class="btn btn-primary"><a href='update-project.php?id=<?php echo $row['id']; ?>'>Edit Project</a></button>
+                      <button class="btn btn-primary"><a href='update.php?id=<?php echo $row['id']; ?>'>Edit Project</a></button>
                   </div>
               </div>
 

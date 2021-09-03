@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@400;700&family=Racing+Sans+One&display=swap');
 
 :root{
-    --primary: #333745;
+    --text: #eaebed;
     --secondary: #ffad5c;
     --accent:#747781;
-    --text:#eaebed;
+    --primary:#333745;
 }
 body{
     font-family: 'Oxygen', sans-serif;

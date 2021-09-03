@@ -1,7 +1,6 @@
 <?php
-// Include config file
-require_once "../config.php";
-
+// initialize the session.
+include "codeSnippets/start_session.php";
 
 
 // Check if the user is already logged in, if yes then redirect him to welcome page

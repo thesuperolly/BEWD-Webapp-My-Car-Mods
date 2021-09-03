@@ -56,7 +56,7 @@
             
 
             //redirecting to the display page
-            header("Location:index.php");
+            header("Location:welcome.php");
             
         } catch(PDOExcpetion $error) {
             echo $sql . "<br>" . $error->getMessage();

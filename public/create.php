@@ -1,6 +1,6 @@
 <?php
-// Initialize the session
-session_start();
+// initialize the session.
+include "codeSnippets/start_session.php";
 
 // this code will only execute after the submit button is clicked
 if (isset($_POST['submit'])) {
@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
         $statement->execute($new_project);
 
         // Refresh and redirect to Index.php
-        header("Refresh:3; url=index.php");
+        header("Refresh:3; url=welcome.php");
 
     } catch(PDOException $error) {
 

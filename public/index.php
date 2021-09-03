@@ -3,10 +3,12 @@
 <!-- accessing Project data -->
 <?php
 
-// Initialize the session
-session_start();
+// initialize the session.
+include "codeSnippets/start_session.php";
 
-// this code will only execute after the submit button is clicked
+
+
+// this code will only execute if the user is logged in.
 if (isset($_SESSION['id'])) {
     // include the config file that we created before
     require "../config.php";
@@ -46,11 +48,9 @@ if (isset($_SESSION['id'])) {
       <h1>Welcome to My Car Mods</h1>
       <p>Track your car Mods and Maintenance. </p>
       <?php
-      if (isset($_SESSION['id'])){
-        echo '<button class="btn btn-lg"><a href="create.php">Create a new Project</a></button>';
-      } else{
+
         echo '<button class="btn btn-lg"><a href="register.php">Register Now</a></button>';
-      }
+        echo '<button class="btn btn-lg"><a href="login.php">Sign In</a></button>';
       ?>
     </div>
   </div>
@@ -60,12 +60,13 @@ if (isset($_SESSION['id'])) {
 <!-- Main Section START -->
 <main>
   <section class="container">
-    <h2>Projects</h2>
+    <h2>What is My Car Mods?</h2>
+    <p>insert about info here...</p>
 
     <div class="projects grid">
 
     <!-- Include Project Cards -->
-    <?php include "templates/projectcards.php" ?>
+    <!-- <?php include "templates/projectcards.php" ?> -->
 
 
     </div>

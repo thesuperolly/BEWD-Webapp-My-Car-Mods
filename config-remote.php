@@ -1,9 +1,9 @@
 <?php
 
-$host       = "localhost";
-$username   = "utlgtjxxpef8k";
-$password   = "LkD2x8#$3&11";
-$dbname     = "dbivadsacp5kga"; 
+$host       = "liebrecht.iad1-mysql-e2-20a.dreamhost.com";
+$username   = "ollhildreamhoste";
+$password   = "MAb4Sz7Z";
+$dbname     = "my_car_mods"; 
 $dsn        = "mysql:host=$host;dbname=$dbname"; 
 $options    = array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION

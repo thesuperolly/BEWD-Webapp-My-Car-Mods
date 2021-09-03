@@ -1,73 +1,156 @@
-<?php
-    // include the config file that we created before
+<?php 
+
+    // initialize the session.
+    include "codeSnippets/start_session.php";
+
+    // checks is user is loggin in and redirects to login page if not.
+    include "codeSnippets/loginCheck.php";
+
+    // include the config file that we created last week
     require "../config.php";
+    require "common.php";
 
-    // this is called a try/catch statement
-    try {
-        // FIRST: Connect to the database
-        $connection = new PDO($dsn, $username, $password, $options);
 
-        // SECOND: Create the SQL
-        $sql = "SELECT * FROM projects";
-        
-        // THIRD: Prepare the SQL
-        $statement = $connection->prepare($sql);
-        $statement->execute();
-        
-        // FOURTH: Put it into a $result object that we can access in the page
-        $result = $statement->fetchAll();
 
-    } catch(PDOException $error) {
-    // if there is an error, tell us what it is
-    echo $sql . "<br>" . $error->getMessage();
+    // run when submit button is clicked
+    if (isset($_POST['submit'])) {
+        try {
+            $connection = new PDO($dsn, $username, $password, $options);  
+            
+            //grab elements from form and set as varaible
+            $project =[
+              "id"                 => $_POST['id'],
+              "projectname"        => $_POST['projectname'],
+              "projectdescription" => $_POST['projectdescription'],
+              "projectstatus"      => $_POST['projectstatus'],
+              "projecttype"        => $_POST['projecttype'],
+              "projectimage"       => $_POST['projectimage']
+            ];
+            
+            // create SQL statement
+            $sql = "UPDATE `projects` 
+                    SET id             = :id,
+                    projectname        = :projectname, 
+                    projectdescription = :projectdescription, 
+                    projectstatus      = :projectstatus, 
+                    projecttype        = :projecttype, 
+                    imagelocation      = :projectimage 
+                    WHERE id = :id";
+
+            //prepare sql statement
+            $statement = $connection->prepare($sql);
+            
+            //execute sql statement
+            $statement->execute($project);
+
+
+        } catch(PDOException $error) {
+            echo $sql . "<br>" . $error->getMessage();
+        }
+        header("Location:welcome.php");
     }
+
+    // GET data from DB
+    //simple if/else statement to check if the id is available
+    if (isset($_GET['id'])) {
+        //yes the id exists 
+        try {
+            // standard db connection
+            $connection = new PDO($dsn, $username, $password, $options);
+            
+            // set if as variable
+            $id = $_GET['id'];
+            
+            //select statement to get the right data
+            $sql = "SELECT * FROM projects WHERE id = :id";
+            
+            // prepare the connection
+            $statement = $connection->prepare($sql);
+            
+            //bind the id to the PDO id
+            $statement->bindValue(':id', $id);
+            
+            // now execute the statement
+            $statement->execute();
+            
+            // attach the sql statement to the new project variable so we can access it in the form
+            $project = $statement->fetch(PDO::FETCH_ASSOC);
+            
+        } catch(PDOExcpetion $error) {
+            echo $sql . "<br>" . $error->getMessage();
+        }
+    } else {
+        // no id, show error
+        echo "No id - something went wrong";
+        //exit;
+    };
 ?>
-<!-- Calling header template -->
-<?php include "templates/header.php"; ?> 
 
-<!-- PAGE CONTENT -->
+<?php include "templates/header.php"; ?>
 
-<h2>Results</h2>
-<div class="projects grid"> 
-    <?php
-        // This is a loop, which will loop through each result in the array
-        foreach($result as $row) {
-    ?>
+<?php if (isset($_POST['submit']) && $statement) : ?>
+	<p>Work successfully updated.</p>
+<?php endif; ?>
 
-            <div class="card">
-                <div class="card-image">
-                    <img src="assets/img/test.jpg" class="img-responsive">
-                </div>
+<h2>Edit a project</h2>
 
-                <div class="card-header">
-                    <h4 class="card-title"><?php echo $row['projectname']; ?></h4>
-                    <div class="card-subtitle"><?php echo $row['projectstatus']; ?></div>
-                    <div class="card-subtitle"><?php echo $row['projecttype']; ?></div>
-                </div>
+<a href='delete.php?delete=<?php echo $project['id']; ?>'>Delete</a>
 
-                <div class="card-body">
-                <?php echo $row['projectdescription']; ?>
-                </div>
+<form method="POST">
 
-                <div class="card-footer">
-                    <p>Updated: <span>24/8/21</span></p>
-                    <button class="btn btn-primary"><a href='update-project.php?id=<?php echo $row['id']; ?>'>Edit Project</a></button>
-                </div>
-            </div>
+    <input type="hidden" name="id" value="<?php echo $id; ?>">
 
-    <!-- </p> -->
-    <?php
-    // this willoutput all the data from the array
-    // echo '<pre>'; var_dump($row);
-    ?>
-    <?php }; //close the foreach?>
-</div>
+    <!-- Project Name -->
+    <div class="form-group">
+        <label class="form-label" for="projectname"><h5>Project</h5></label>
+        <input class="form-input" type="text" id="projectname" name="projectname" placeholder="New tyres?" value="<?php echo escape($project['projectname']); ?>" required>
+    </div>
+
+    <!-- Project description -->
+    <div class="form-group">
+        <label class="form-label" for="projectdescription"><h5>Description</h5></label>
+        <textarea class="form-input" type="text" id="projectdescription" name="projectdescription" placeholder="what are the details?" required><?php echo escape($project['projectdescription']); ?></textarea>
+    </div>
+
+    <!-- Project Type -->
+    <div class="form-group">
+        <label class="form-label">Project Type</label>
+        <label class="form-radio">
+            <input type="radio" id="maintenance" name="projecttype" value="Maintenance" <?php if($project['projecttype']=="Maintenanace"){ echo "checked";}?>>
+            <i class="form-icon"></i> Maintenance
+        </label>
+        <label class="form-radio">
+            <input type="radio" id="modification" name="projecttype" value="Modification" <?php if($project['projecttype']=="Modification"){ echo "checked";}?>>
+            <i class="form-icon"></i> Modification
+        </label>
+    </div>
     
-<form method="post">
-<input type="submit" name="submit" value="View all">
+    
+    <!-- Project Status -->
+    <div class="form-group">
+        <label class="form-label">Project Status</label>
+        <label class="form-radio">
+            <input type="radio" id="notstarted" name="projectstatus" value="Not Started" <?php if($project['projectstatus']=="Not Started"){ echo "checked";}?>>
+            <i class="form-icon"></i> Not Started
+        </label>
+        <label class="form-radio">
+            <input type="radio" id="inprogress" name="projectstatus" value="In Progress" <?php if($project['projectstatus']=="In Progress"){ echo "checked";}?>>
+            <i class="form-icon"></i> In Progress
+        </label>
+        <label class="form-radio">
+            <input type="radio" id="completed" name="projectstatus" value="Completed" <?php if($project['projectstatus']=="Completed"){ echo "checked";}?>>
+            <i class="form-icon"></i> Completed
+        </label>
+    </div>
+
+    <!-- Project Image -->
+    <div class="form-group">
+        <label class="form-label" for="projectimage">Image</label>
+        <input class="form-input" type="file" id="projectimage" name="projectimage" value="<?php echo escape($project['imagelocation']); ?>">
+    </div>
+
+    <!-- Form Submit -->
+    <input class="btn btn-primary input-group-btn" type="submit" name="submit" value="Save">
 </form>
 
-
-
-<!-- Calling footer template -->
-<?php include "templates/footer.php"; ?>    
+    <?php include "templates/footer.php";?>

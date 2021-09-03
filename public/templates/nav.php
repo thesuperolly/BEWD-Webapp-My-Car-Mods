@@ -1,13 +1,17 @@
 <header class="navbar">
+
   <section class="navbar-section">
-  <a href="index.php" class="navbar-brand mr-2"><h3>My Car Mods</h3></a>
-  
+
   <?php if(isset($_SESSION['loggedin'])==true){ ?>
-          <p>Logged in as: <?php echo htmlspecialchars($_SESSION["username"]); ?> </p>
-  <?php };?>
+    <a href="welcome.php" class="navbar-brand mr-2"><h3>My Car Mods</h3></a>
+    <p>Logged in as: <?php echo htmlspecialchars($_SESSION["username"]); ?> </p>
+  <?php }else{ ?>
+    <a href="index.php" class="navbar-brand mr-2"><h3>My Car Mods</h3></a>
 
-
+ <?php };?>
   </section>
+
+
   <section class="navbar-section">
 
     <?php 
