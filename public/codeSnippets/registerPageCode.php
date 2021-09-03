@@ -4,6 +4,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     header("location: welcome.php");
     exit;
 }
+require "../config.php";
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
