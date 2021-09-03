@@ -28,7 +28,7 @@
 
     <form method="post" enctype="multipart/form-data">
 
-    <a class="btn" href='delete.php?delete=<?php echo $project['id']; ?>'>Delete Project</a>
+    <a onClick="return confirm('Are you sure you want to Delete this project?')" class="btn" href='delete.php?delete=<?php echo $project['id']; ?>'>Delete Project</a>
 
         <input type="hidden" name="id" value="<?php echo $id; ?>">
 
