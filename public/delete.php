@@ -16,12 +16,14 @@
 ?>
 
 <?php include "templates/header.php"; ?>
-
+<div class="wrapper">
 <?php if($deleted == true){
     echo '<h2>Project Deleted Successfully</h2>';
     echo '<a class="btn" href="welcome.php">Back to My Projects</a>';
     header("location: welcome.php");
     exit();
 }  ?>
+
+</div>
 
 <?php include "templates/footer.php"; ?>
