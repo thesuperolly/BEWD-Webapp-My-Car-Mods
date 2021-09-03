@@ -17,17 +17,17 @@
 
                   <div class="card-header">
                       <h4 class="card-title"><?php echo $row['projectname']; ?></h4>
-                      <div class="card-subtitle"><?php echo $row['projectstatus']; ?></div>
-                      <div class="card-subtitle"><?php echo $row['projecttype']; ?></div>
+                      <p><?php echo $row['projectdescription']; ?></p>
                   </div>
 
                   <div class="card-body">
-                  <?php echo $row['projectdescription']; ?>
+                        <div class="card-subtitle"><?php echo $row['projectstatus']; ?></div>
+                        <div class="card-subtitle"><?php echo $row['projecttype']; ?></div>
                   </div>
 
                   <div class="card-footer">
-                      <p>Updated: <span><?php echo $row['date']; ?></span></p>
-                      <button class="btn btn-primary"><a href='update.php?id=<?php echo $row['id']; ?>'>Edit Project</a></button>
+                        <!-- <p>Updated: <span><?php echo $row['date']; ?></span></p> -->
+                        <a class="btn" href='update.php?id=<?php echo $row['id']; ?>'>Edit Project</a>
                   </div>
               </div>
 

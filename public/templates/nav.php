@@ -13,20 +13,13 @@
 
 
   <section class="navbar-section">
-
     <?php 
-
-
     if(isset($_SESSION['loggedin'])==true){ 
         echo '<a href="logout.php"><span>Logout</span></a></li>';
-
       }elseif(isset($_SESSION['loggedin'])==false){
-        echo '<p>Don\'t have an account? <a href="register.php"><span>Register</span></a>.</p>';
+        echo '<p class="navlink" >Don\'t have an account? <a href="register.php"><span>Register</span></a>.  </p>';
         echo '<p>Have an account? <a href="login.php"><span>Login</span></a>.</p>';
-
       }
     ?>
-
-
   </section>
 </header>

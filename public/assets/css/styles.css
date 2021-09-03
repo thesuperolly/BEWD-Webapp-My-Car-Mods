@@ -1,19 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@400;700&family=Racing+Sans+One&display=swap');
 
 :root{
-    --text: #eaebed;
+    --primary: #eaebed;
     --secondary: #ffad5c;
     --accent:#747781;
-    --primary:#333745;
+    --text:#333745;
 }
 body{
     font-family: 'Oxygen', sans-serif;
     background-color: var(--primary);
+    box-sizing: border-box;
+    min-height: 100Vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 h1, h2, h3, h4, h5, h6{
     font-family: 'Racing Sans One', cursive;
-    color: var(--secondary);
+    color: var(--text);
 }
 p{
     color: var(--text);
@@ -23,7 +29,17 @@ header{
     margin: 1rem;
 }
 footer{
-    background-color: var(--accent);
+    margin-top: 3rem;
+    width: 100%;
+    justify-self: flex-end;
+}
+footer .container{
+    display: flex;
+    align-items: baseline;
+}
+
+.footerLink{
+    padding: 1rem;
 }
 section{
     margin: 1rem inherit;
@@ -33,25 +49,39 @@ form{
     width: clamp(200px, 50%, 600px);
     background-color: var(--accent);
     padding: 1rem;
+    border-radius: .25rem;
 }
-label{
+label, label h5{
     color: var(--secondary);
+}
+form p{
+    color: var(--primary);
+}
+
+form a, form a:visited{
+    color: var(--secondary);
+}
+form a:hover{
+    color: var(--text);
+}
+.formImage{
+    /* border: 4px solid var(--text); */
+    border-radius: .25rem;
 }
 
 .hero-sm{
     background-color: var(--accent);
 }
 
- .btn, .btn.btn-primary{
+ .btn, .btn.btn-primary, .btn:visited{
     background-color: var(--secondary);
-    border: 1px solid var(--secondary);
-    border: none;
-    color: var(--primary);
+    border: 2px solid var(--secondary);
+    color: var(--text);
 }
 .btn:hover, .btn.btn-primary:hover{
-    background-color: var(--primary);
-    border: 1px solid var(--secondary);
-    color: var(--text);
+    background-color: var(--text);
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
 }
 
 .projects{
@@ -68,24 +98,67 @@ label{
 
 .card{
     background-color: var(--accent);
-    border-color: var(--secondary);
+    /* border: 4px solid var(--text); */
     color: var(--text);
+    border-radius: .25rem;
+}
+.card-title{
+    color: var(--secondary);
+}
+.card-body{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.card-header p{
+    color: var(--primary);
 }
 .card-subtitle{
     font-weight: bold;
     color: var(--primary);
 }
 a{
-    color: var(--secondary);
+    color: var(--accent);
     margin: .5 1rem;
 }
 a:visited{
-    color: var(--secondary);
+    color: var(--accent);
 }
 a:hover{
-    color: var(--text);
-    
+    color: var(--secondary);
+    text-decoration: none; 
 }
 .btn a{
     color: var(--primary);
+}
+.hero-body h1{
+    color: var(--secondary);
+}
+.hero-body p{
+    color: var(--primary);
+}
+.flexRow{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
+.flexCol{
+    display: flex;
+    width: 100%;
+}
+.navbar{
+    align-items: baseline;
+}
+.navbar .navbar-section{
+    align-items: baseline;
+}
+.navlink{
+    padding: 0 .5rem;
+}
+.wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
