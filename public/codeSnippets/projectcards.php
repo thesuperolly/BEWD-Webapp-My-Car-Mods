@@ -7,7 +7,7 @@
               // This is a loop, which will loop through each result in the array
               foreach($result as $row) {
                 // check if user ID matches posd id and only post user created posts.
-                if (isset($_SESSION['id']) == $row['userid']) {
+                if (isset($_SESSION['id']) && $_SESSION['id']== $row['userid']) {
           ?>
 
               <div class="card">
